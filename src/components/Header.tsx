@@ -1,5 +1,4 @@
 'use client';
-import React from 'react';
 import { Sun } from './Icons';
 import Image from 'next/image';
 
@@ -27,7 +26,7 @@ const Header = () => {
               alt=''
               width={24}
               height={24}
-              className='rounded-full aspect-square h-6 '
+              className='rounded-full aspect-square'
             />
             <p className='text-slate-950 text-sm'>{doctor.name}</p>
           </div>
