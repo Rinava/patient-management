@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import { MagnifyingGlass } from "@/components/icons";
+import { MagnifyingGlass } from "@/components/icon";
 
 interface Props {
   value: string;

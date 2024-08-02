@@ -12,7 +12,7 @@ import dateFormat from "@/utils/dateFormat";
 
 import { useToast } from "@/helpers/Toaster";
 
-import { Edit, Trash, Chevron } from "@/components/icons";
+import { Edit, Trash, Chevron } from "@/components/icon";
 import Button from "@/components/commons/Button";
 
 interface Props {

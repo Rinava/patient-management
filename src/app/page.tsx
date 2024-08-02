@@ -5,7 +5,7 @@ import { useQuery } from "react-query";
 
 import { Patient } from "@/types";
 
-import { Plus } from "@/components/icons";
+import { Plus } from "@/components/icon";
 import Button from "@/components/commons/Button";
 import PatientList from "@/components/PatientList";
 import PatientModal from "@/components/PatientModal";

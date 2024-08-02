@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 
-import { Sun } from "@/components/icons";
+import { Sun } from "@/components/icon";
 
 const doctor = {
   name: "Edward Jenner",

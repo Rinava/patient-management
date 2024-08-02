@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import clsx from "clsx";
 
-import { Cross } from "@/components/icons";
+import { Cross } from "@/components/icon";
 import Button from "@/components/commons/Button";
 
 const ToastContext = createContext({} as any);

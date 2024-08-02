@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import Button from "@/components/commons/Button";
-import {Cross} from "@/components/icons"
+import {Cross} from "@/components/icon"
 import { useEffect } from "react";
 
 interface ModalProps {
