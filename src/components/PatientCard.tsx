@@ -10,7 +10,7 @@ import { Patient } from "@/types";
 
 import dateFormat from "@/utils/dateFormat";
 
-import { useToast } from '@/helpers/Toaster';
+import { useToast } from "@/helpers/Toaster";
 
 import { Edit, Trash, Chevron } from "@/components/icons";
 import Button from "@/components/commons/Button";
@@ -61,12 +61,7 @@ const Actions = ({
   );
 };
 
-const Header = ({
-  patient,
-  isOpen,
-  onEdit,
-  onToggle,
-}: Omit<Props, "className">) => (
+const Header = ({ patient, isOpen, onEdit, onToggle }: Props) => (
   <div className="flex items-center justify-between p-3">
     <div className="flex items-center gap-4">
       <Image
@@ -112,11 +107,7 @@ const Header = ({
   </div>
 );
 
-const Content = ({
-  patient,
-  isOpen,
-  onEdit,
-}: Omit<Props, "className" | "onToggle">) => (
+const Content = ({ patient, isOpen, onEdit }: Omit<Props, "onToggle">) => (
   <div
     className={clsx(
       "grid gap-3 overflow-hidden transition-[grid-template-rows] duration-300",

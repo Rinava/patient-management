@@ -27,7 +27,6 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
 
   const handleClose = () => {
     if (formRef.current) formRef.current.reset();
-    toast({ message: "Patient saved successfully", type: "success" });
     onClose();
   };
 
