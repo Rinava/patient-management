@@ -1,38 +1,52 @@
-import PatientCard from "./PatientCard";
-const data = [
-  {
-    id: 1,
-    name: "John Doe",
-    avatar: "/images/Edward_Jenner.jpg",
-    createdAt: "June 14, 2019, 19:30",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    website: "https://example.com",
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    avatar: "/images/Edward_Jenner.jpg",
-    createdAt: "June 14, 2019, 19:30",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    website: "https://example.com",
-  },
-  {
-    id: 3,
-    name: "Jane Doe",
-    avatar: "/images/Edward_Jenner.jpg",
-    createdAt: "June 14, 2019, 19:30",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-    website: "https://example.com",
-  },
-];
+import { useState } from "react";
 
-const PatientList = () => {
+import { useMediaQuery } from "@/hooks/useMediaQuery";
+
+import { Patient } from "@/types";
+
+import PatientCard from "@/components/PatientCard";
+
+interface Props {
+  patients: Patient[];
+  handleEdit: (patient: Patient) => void;
+}
+
+const PatientList = ({ patients, handleEdit }: Props) => {
+  const isDesktop = useMediaQuery("(min-width: 1024px)");
+  const [currentCard, setCurrentCard] = useState("");
+
+  const patientColumns = () => {
+    if (isDesktop) {
+      const even = patients.filter((_, i) => i % 2 === 0);
+      const odd = patients.filter((_, i) => i % 2 === 1);
+      return [even, odd];
+    } else {
+      return [patients];
+    }
+  };
+
+  if (!patients.length) return <p className="mx-auto">No patients found.</p>;
+
   return (
-    <ul className="flex flex-wrap gap-3">
-      {data.map((patient) => (
-        <PatientCard key={patient.id} patient={patient} className={"w-full"} />
+    <div className="flex w-full gap-4">
+      {patientColumns().map((col, index) => (
+        <ul className="flex w-full flex-col gap-4" key={index}>
+          {col?.map((patient) => (
+            <PatientCard
+              key={patient.id}
+              patient={patient}
+              isOpen={currentCard === patient.id}
+              onToggle={() => {
+                currentCard === patient.id
+                  ? setCurrentCard("")
+                  : setCurrentCard(patient.id);
+              }}
+              onEdit={() => handleEdit(patient)}
+            />
+          ))}
+        </ul>
       ))}
-    </ul>
+    </div>
   );
 };
 

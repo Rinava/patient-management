@@ -1,6 +1,7 @@
-const ChevronUp = () => {
+const Chevron = ({ className }: { className?: string }) => {
   return (
     <svg
+      className={className}
       width="20"
       height="20"
       viewBox="0 0 20 20"
@@ -17,4 +18,4 @@ const ChevronUp = () => {
   );
 };
 
-export default ChevronUp;
+export default Chevron;

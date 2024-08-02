@@ -1,6 +1,8 @@
 "use client";
-import { Sun } from "./Icons";
+
 import Image from "next/image";
+
+import { Sun } from "@/components/icons";
 
 const doctor = {
   name: "Edward Jenner",
@@ -28,7 +30,9 @@ const Header = () => {
               height={24}
               className="aspect-square rounded-full"
             />
-            <p className="text-sm text-slate-950">{doctor.name}</p>
+            <p className="hidden text-sm text-slate-950 sm:block">
+              {doctor.name}
+            </p>
           </div>
         </div>
       </div>

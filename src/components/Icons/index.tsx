@@ -1,8 +1,9 @@
 import Sun from "./Sun";
 import Edit from "./Edit";
 import Trash from "./Trash";
-import ChevronDown from "./ChevronDown";
-import ChevronUp from "./ChevronUp";
+import Chevron from "./Chevron";
 import MagnifyingGlass from "./MagnifyingGlass";
+import Cross from "./Cross";
+import Plus from "./Plus";
 
-export { Sun, Edit, Trash, ChevronDown, ChevronUp, MagnifyingGlass };
+export { Sun, Edit, Trash, Chevron, MagnifyingGlass, Cross, Plus };

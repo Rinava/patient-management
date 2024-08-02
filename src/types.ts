@@ -1,7 +1,8 @@
 export interface Patient {
+  id: string;
   name: string;
   avatar: string;
-  createdAt: string;
+  createdat: string;
   description: string;
   website: string;
 }

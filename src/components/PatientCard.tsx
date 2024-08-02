@@ -1,64 +1,158 @@
 "use client";
+
 import React from "react";
-import { Patient } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
-import { Edit, Trash, ChevronDown } from "./Icons";
+import { useQueryClient } from "react-query";
 import clsx from "clsx";
+
+import { Patient } from "@/types";
+
+import dateFormat from "@/utils/dateFormat";
+
+import { Edit, Trash, Chevron } from "@/components/icons";
+import Button from "@/components/commons/Button";
 
 interface Props {
   patient: Patient;
-  className: string;
+  className?: string;
+  isOpen: boolean;
+  onToggle: () => void;
+  onEdit: () => void;
 }
-const PatientCard = ({ patient, className }: Props) => {
+
+const Actions = ({
+  patient,
+  className,
+  onEdit,
+}: Omit<Props, "isOpen" | "onToggle">) => {
+  const queryClient = useQueryClient();
+
+  const onDelete = async () => {
+    try {
+      const response = await fetch(`/api/patients`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: patient.id }),
+      });
+      if (response.ok) {
+        queryClient.invalidateQueries("patients");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <li className={clsx("rounded-2xl bg-slate-50 p-3 pr-6", className)}>
-      <div className="flex justify-between">
-        <div className="flex items-center gap-4">
-          <Image
-            src={patient.avatar}
-            alt=""
-            width={48}
-            height={48}
-            className="aspect-square rounded-full"
-          />
-          <div className="flex flex-col gap-2">
-            <p className="font-semibold leading-none text-slate-950">
-              {patient.name}
-            </p>
-            <time
-              className="text-xs leading-none text-slate-950/70"
-              dateTime={patient.createdAt}
-            >
-              {patient.createdAt}
-            </time>
-          </div>
-        </div>
-        <div className="flex justify-between gap-6">
-          <div className="flex gap-2">
-            <button aria-label="Edit patient" onClick={() => {}}>
-              <Edit />
-            </button>
-            <button aria-label="Delete patient" onClick={() => {}}>
-              <Trash />
-            </button>
-          </div>
-          <button aria-label="Toggle description" onClick={() => {}}>
-            <ChevronDown />
-          </button>
-        </div>
+    <div className={clsx("flex gap-2", className)}>
+      <Button aria-label="Edit patient" onClick={onEdit} variant="ghost">
+        <Edit className="h-4" />
+      </Button>
+      <Button aria-label="Delete patient" onClick={onDelete} variant="ghost">
+        <Trash className="h-4" />
+      </Button>
+    </div>
+  );
+};
+
+const Header = ({
+  patient,
+  isOpen,
+  onEdit,
+  onToggle,
+}: Omit<Props, "className">) => (
+  <div className="flex items-center justify-between p-3">
+    <div className="flex items-center gap-4">
+      <Image
+        src={patient.avatar.length ? patient.avatar : "/images/Placeholder.png"}
+        alt=""
+        width={48}
+        height={48}
+        className="aspect-square rounded-full"
+      />
+      <div className="flex flex-col gap-2">
+        <p className="font-semibold leading-none text-slate-950">
+          {patient.name}
+        </p>
+        {patient.createdat && (
+          <time
+            className="text-xs leading-none text-slate-950/70"
+            dateTime={patient.createdat}
+          >
+            {dateFormat(patient.createdat)}
+          </time>
+        )}
       </div>
-      <div className="flex flex-col gap-3 p-6">
+    </div>
+    <div className="flex justify-between gap-6">
+      <Actions patient={patient} onEdit={onEdit} className="hidden sm:flex" />
+      <Button
+        aria-label="Toggle description"
+        onClick={onToggle}
+        variant="plain"
+      >
+        <Chevron
+          className={clsx(
+            "w-4 transition-transform duration-300",
+            !isOpen && "[transform:rotateX(180deg)]",
+          )}
+        />
+      </Button>
+    </div>
+  </div>
+);
+
+const Content = ({
+  patient,
+  isOpen,
+  onEdit,
+}: Omit<Props, "className" | "onToggle">) => (
+  <div
+    className={clsx(
+      "grid gap-3 overflow-hidden transition-[grid-template-rows] duration-300",
+      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+    )}
+  >
+    <div
+      className={clsx(
+        "min-h-0 overflow-hidden transition-[visibility] duration-300",
+        isOpen ? "visible" : "invisible",
+      )}
+    >
+      <div className="flex flex-col gap-4 border-t p-6">
         <p className="text-sm text-slate-950/90">{patient.description}</p>
         <Link
-          className="text-sm font-semibold underline"
+          className="text-sm font-semibold underline hover:opacity-90"
           href={patient.website}
         >
           {patient.website}
         </Link>
+        <div className="ml-auto sm:hidden">
+          <Actions patient={patient} onEdit={onEdit} className="sm:flex" />
+        </div>
       </div>
-    </li>
-  );
-};
+    </div>
+  </div>
+);
+
+const PatientCard = ({
+  patient,
+  className,
+  isOpen,
+  onToggle,
+  onEdit,
+}: Props) => (
+  <li className={clsx("rounded-2xl bg-slate-50", className)}>
+    <Header
+      patient={patient}
+      onEdit={onEdit}
+      onToggle={onToggle}
+      isOpen={isOpen}
+    />
+    <Content patient={patient} onEdit={onEdit} isOpen={isOpen} />
+  </li>
+);
 
 export default PatientCard;
