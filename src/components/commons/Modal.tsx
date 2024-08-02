@@ -41,7 +41,7 @@ const Modal = ({ children, isOpen, onClose }: ModalProps) => {
         className="absolute inset-0 z-10 bg-black bg-opacity-5 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="relative z-20 w-full max-w-[454px] rounded-xl bg-white">
+      <div className="relative z-20 w-full max-w-[454px] rounded-xl bg-white mx-4">
         {children}
       </div>
     </div>

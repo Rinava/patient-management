@@ -3,6 +3,8 @@ import { useQueryClient } from "react-query";
 
 import { Patient } from "@/types";
 
+import { useToast } from "@/helpers/Toaster";
+
 import {
   Modal,
   ModalHeader,
@@ -19,11 +21,13 @@ interface Props {
 }
 
 const PatientModal = ({ patient, isOpen, onClose }: Props) => {
+  const toast = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
 
   const handleClose = () => {
     if (formRef.current) formRef.current.reset();
+    toast({ message: "Patient saved successfully", type: "success" });
     onClose();
   };
 
@@ -44,8 +48,9 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
 
         handleClose();
         queryClient.invalidateQueries("patients");
+        toast({ message: "Patient updated successfully", type: "success" });
       } catch (error) {
-        console.error(error);
+        toast({ message: "An error occurred", type: "error" });
       }
     } else {
       try {
@@ -59,8 +64,9 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
 
         handleClose();
         queryClient.invalidateQueries("patients");
+        toast({ message: "Patient saved successfully", type: "success" });
       } catch (error) {
-        console.error(error);
+        toast({ message: "An error occurred", type: "error" });
       }
     }
   };
@@ -87,13 +93,14 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
             defaultValue={patient?.avatar}
             required
             placeholder="https://example.com/avatar.jpg"
+            pattern={`(http)?s?:?(\/\/[^"']*\.(?:png|jpg|jpeg|gif|png|svg))`}
           />
           <Input
             type="textarea"
             name="description"
             label="Description"
             defaultValue={patient?.description}
-            className="h-52"
+            className="h-48 min-h-48"
             required
             placeholder="Patient description..."
           />
@@ -107,10 +114,12 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
           />
         </ModalBody>
         <ModalFooter className="flex gap-2">
-          <Button variant="plain" size='md' onClick={handleClose}>
+          <Button variant="plain" size="md" onClick={handleClose}>
             Cancel
           </Button>
-          <Button type="submit" size='md'>Save</Button>
+          <Button type="submit" size="md">
+            Save
+          </Button>
         </ModalFooter>
       </form>
     </Modal>

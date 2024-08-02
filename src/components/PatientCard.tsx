@@ -10,6 +10,8 @@ import { Patient } from "@/types";
 
 import dateFormat from "@/utils/dateFormat";
 
+import { useToast } from '@/helpers/Toaster';
+
 import { Edit, Trash, Chevron } from "@/components/icons";
 import Button from "@/components/commons/Button";
 
@@ -27,6 +29,7 @@ const Actions = ({
   onEdit,
 }: Omit<Props, "isOpen" | "onToggle">) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   const onDelete = async () => {
     try {
@@ -39,6 +42,7 @@ const Actions = ({
       });
       if (response.ok) {
         queryClient.invalidateQueries("patients");
+        toast({ message: "Patient deleted successfully", type: "success" });
       }
     } catch (error) {
       console.error(error);
@@ -66,7 +70,11 @@ const Header = ({
   <div className="flex items-center justify-between p-3">
     <div className="flex items-center gap-4">
       <Image
-        src={patient.avatar.length ? patient.avatar : "/images/Placeholder.png"}
+        src={
+          patient.avatar.length && patient.avatar.startsWith("http")
+            ? patient.avatar
+            : "/images/Placeholder.png"
+        }
         alt=""
         width={48}
         height={48}

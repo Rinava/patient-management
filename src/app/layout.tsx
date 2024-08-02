@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Providers from "@/components/Providers";
+import clsx from "clsx";
+
 import "./globals.css";
 
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import clsx from "clsx";
+import Providers from "@/components/layout/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,15 +22,17 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
-  <Providers>
-    <html lang="en">
+  <html lang="en">
+
       <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+      <Providers>
         <Header />
         {children}
         <Footer />
+        </Providers>
       </body>
-    </html>
-  </Providers>
+
+  </html>
 );
 
 export default RootLayout;

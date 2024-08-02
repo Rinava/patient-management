@@ -35,7 +35,7 @@ const Input = ({
       />
     ) : (
       <input
-        type="text"
+        type={type}
         id={name}
         name={name}
         defaultValue={defaultValue}
