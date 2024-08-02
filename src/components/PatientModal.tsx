@@ -37,13 +37,18 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
 
     if (patient) {
       try {
-        await fetch(`/api/patients/`, {
+        const result = await fetch(`/api/patients/`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ id: patient.id, ...data }),
         });
+
+        if (!result.ok) {
+          toast({ message: "Cannot update patient", type: "error" });
+          return;
+        }
 
         handleClose();
         queryClient.invalidateQueries("patients");
@@ -53,13 +58,18 @@ const PatientModal = ({ patient, isOpen, onClose }: Props) => {
       }
     } else {
       try {
-        await fetch(`/api/patients`, {
+        const result = await fetch(`/api/patients`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
+
+        if (!result.ok) {
+          toast({ message: "Cannot save patient", type: "error" });
+          return;
+        }
 
         handleClose();
         queryClient.invalidateQueries("patients");
