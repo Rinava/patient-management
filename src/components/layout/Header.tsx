@@ -13,7 +13,7 @@ const Header = () => (
   <header className="sticky top-0 flex justify-center border-b border-slate-950/10 z-50 bg-white">
     <div className="flex w-full max-w-screen-xl items-center justify-between p-5">
       <div className="flex items-center gap-4">
-        <h1 className="text-sm text-slate-950/40">Patient Management</h1>
+        <h1 className="text-sm text-slate-950/80 font-semibold">Patient Management</h1>
         <span className="text-sm text-slate-950/20">/</span>
         <h2 className="text-sm text-slate-950">Patients</h2>
       </div>
