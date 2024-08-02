@@ -8,7 +8,7 @@ import clsx from "clsx";
 
 import { Patient } from "@/types";
 
-import dateFormat from "@/utils/dateFormat";
+import dateFormat from "@/helpers/dateFormat";
 
 import { useToast } from "@/helpers/Toaster";
 

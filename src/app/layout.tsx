@@ -23,15 +23,13 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => (
   <html lang="en">
-
-      <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
+    <body className={clsx(inter.className, "flex min-h-screen flex-col")}>
       <Providers>
         <Header />
         {children}
         <Footer />
-        </Providers>
-      </body>
-
+      </Providers>
+    </body>
   </html>
 );
 
